@@ -12,6 +12,7 @@ Package.onUse(function(api) {
   api.use('accounts-base');
   api.use('accounts-password');
   api.use('check');
+  api.use('tracker');
   api.use('artwells:accounts-guest');
   api.use('mizzao:user-status');
   api.use('meteormud:namespace');
