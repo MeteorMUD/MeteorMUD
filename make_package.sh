@@ -9,7 +9,6 @@ cp "$1.js" lib/
 mv "$1.js" server/
 cd ..
 cd ..
-meteor add "meteormud:$1"
 cat <<EOF
 api.use('meteormud:namespace');
 api.use('meteormud:guard');
