@@ -1,7 +1,7 @@
 Package.describe({
   name: 'meteormud:namespace',
   version: '0.0.1',
-  summary: 'The MeteorMUD namespace, and nothing else.',
+  summary: 'The MeteorMUD namespace and core extensible namespaces as needed.',
   git: '',
   documentation: 'README.md'
 });

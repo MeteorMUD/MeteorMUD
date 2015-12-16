@@ -4,14 +4,28 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-meteor-base             # Packages every Meteor app needs to have
-mobile-experience       # Packages for a great mobile UX
-mongo                   # The database Meteor supports right now
-blaze-html-templates    # Compile .html files into Meteor Blaze views
-session                 # Client-side reactive dictionary for your app
-jquery                  # Helpful client-side library
-tracker                 # Meteor's client-side reactive programming library
-standard-minifiers      # JS/CSS minifiers run for production mode
-es5-shim                # ECMAScript 5 compatibility for older browsers.
-ecmascript              # Enable ECMAScript2015+ syntax in app code
-meteormud:namespace
+# Official Packages
+
+meteor-base             		# Packages every Meteor app needs to have
+mobile-experience       		# Packages for a great mobile UX
+mongo                   		# The database Meteor supports right now
+blaze-html-templates    		# Compile .html files into Meteor Blaze views
+session                 		# Client-side reactive dictionary for your app
+jquery                  		# Helpful client-side library
+tracker                 		# Meteor's client-side reactive programming library
+standard-minifiers      		# JS/CSS minifiers run for production mode
+es5-shim                		# ECMAScript 5 compatibility for older browsers.
+ecmascript              		# Enable ECMAScript2015+ syntax in app code
+accounts-base					      # Base accounts support.
+accounts-password           # Support for using accounts with passwords.
+check                       # Support for check()ing arguments.
+
+# Third-Party Packages
+
+artwells:accounts-guest			# Support for automatically creating accounts for guests.
+mizzao:user-status          # Support for monitoring user status.
+
+# MeteorMUD Packages
+
+meteormud:namespace				# Defines the global MeteorMUD namespace and some sub-namespaces.
+meteormud:accounts 				# Defines user accounts and some common operations.
