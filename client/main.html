@@ -1,0 +1,30 @@
+<head>
+  <title>MeteorMUD</title>
+</head>
+
+<body>
+  <header>
+    <h1>Welcome to MeteorMUD!</h1>
+    {{> loginButtons}}
+  </header>
+
+  {{> output}}
+
+  {{#if currentUser}}
+    <form class="input">
+      <input type="text" name="text" autocomplete="off" style="width:95%; margin-right: 5px;" placeholder="What next?" />
+    </form>
+  {{/if}}
+
+</body>
+
+<template name="output">
+  <div id="output" style="overflow: auto; height: 400px;">
+    <div id="objects">
+      {{#each outputObjects}}
+        <p>{{> Template.dynamic template=getTemplateName }}</p>
+        {{scrollToBottomOfOutput}}
+      {{/each}}
+    </div>
+  </div>
+</template>
