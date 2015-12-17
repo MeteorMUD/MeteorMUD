@@ -51,6 +51,7 @@ meteor-base@1.0.1
 meteormud:accounts@0.0.1
 meteormud:namespace@0.0.1
 meteormud:parsers@0.0.1
+meteormud:permissions@0.0.1
 meteormud:schemas@0.0.1
 meteormud:templates@0.0.1
 meteormud:ui-cli@0.0.1
