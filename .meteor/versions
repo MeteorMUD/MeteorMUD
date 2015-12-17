@@ -49,6 +49,7 @@ mdg:validation-error@0.1.0
 meteor@1.1.10
 meteor-base@1.0.1
 meteormud:accounts@0.0.1
+meteormud:help@0.0.1
 meteormud:namespace@0.0.1
 meteormud:parsers@0.0.1
 meteormud:schemas@0.0.1
