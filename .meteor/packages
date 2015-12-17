@@ -37,3 +37,4 @@ meteormud:accounts                        # User account support for MeteorMUD.
 meteormud:schemas                         # Schema support for validating and processing objects in MeteorMUD.
 meteormud:templates                       # Template management and associated functionality for MeteorMUD.
 meteormud:ui-cli                          # The command-line interface for MeteorMUD.
+meteormud:parsers                         # Core parsing support for MeteorMUD.
