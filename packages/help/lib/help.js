@@ -15,6 +15,12 @@ Schemas.HelpSeeAlso = new SimpleSchema([
       min: 2,
       max: 32,
     },
+    uniqueName: {
+      type: String,
+      label: "Unique Name",
+      index: true,
+      unique: true,
+    },
     title: {
       type: String,
       label: "Title",
@@ -43,6 +49,13 @@ Schemas.Help = new SimpleSchema([
       label: "Name",
       min: 2,
       max: 32,
+      index: true,
+    },
+    uniqueName: {
+      type: String,
+      label: "Unique Name",
+      index: true,
+      unique: true,
     },
     title: {
       type: String,
@@ -55,24 +68,37 @@ Schemas.Help = new SimpleSchema([
       label: "Summary",
       min: 50,
       max: 250,
+      index: true,
     },
     categories: {
       type: [String],
       label: "Categories",
+      optional: true,
       defaultValue: [
         "general",
       ],
       min: 1,
+      index: true,
     },
     searchTerms: {
       type: [String],
       label: "Search Terms",
+      optional: true,
       defaultValue: [],
+      index: true,
     },
     seeAlso: {
       type: [Schemas.HelpSeeAlso],
       label: "See Also",
+      optional: true,
       defaultValue: [],
+    },
+    permissions: {
+      type: [String],
+      label: "Permissions",
+      optional: true,
+      defaultValue: [],
+      index: true,
     },
     text: {
       type: String,

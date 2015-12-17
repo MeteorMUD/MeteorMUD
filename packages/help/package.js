@@ -11,6 +11,7 @@ Package.onUse(function(api) {
   api.use('ecmascript');
   api.use('meteormud:namespace');               
   api.use('meteormud:schemas');
+  api.use('meteormud:permissions');
   api.addFiles('lib/help.js', ['client', 'server']);
   api.addFiles('client/help.js', 'client');
   api.addFiles('server/help.js', 'server');
