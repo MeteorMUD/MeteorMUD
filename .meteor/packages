@@ -39,3 +39,4 @@ meteormud:templates                       # Template management and associated f
 meteormud:ui-cli                          # The command-line interface for MeteorMUD.
 meteormud:parsers                         # Core parsing support for MeteorMUD.
 meteormud:permissions                     # Access control for MeteorMUD.
+meteormud:help                            # Core help support for MeteorMUD.

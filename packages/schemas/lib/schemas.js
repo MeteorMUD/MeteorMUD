@@ -139,6 +139,124 @@ Schemas.Result = new SimpleSchema([
   },
 ]);
 
+// A schema representing formatted text, specifically HTML.
+Schemas.Text = new SimpleSchema([
+  Schemas.Fallback,
+  {
+    text: {
+      type: String,
+      label: "Text",
+      min: 0,
+      max: 16384,
+    },
+    format: {
+      type: String,
+      label: "Format",
+      optional: true,
+      allowedValues: [
+        "text",
+      ],
+      defaultValue: "text",
+    },
+  },
+]);
+
+// A schema representing a heading for an article.
+Schemas.Heading = new SimpleSchema([
+  Schemas.Fallback,
+  {
+    heading: {
+      type: String,
+      label: "Heading",
+      min: 1,
+      max: 32,
+    },
+    format: {
+      type: String,
+      label: "Format",
+      optional: true,
+      allowedValues: [
+        "heading",
+      ],
+      defaultValue: "heading",
+    },
+  },
+]);
+
+// A schema representing a subheading for an article.
+Schemas.Subheading = new SimpleSchema([
+  Schemas.Fallback,
+  {
+    subheading: {
+      type: String,
+      label: "Subheading",
+      min: 1,
+      max: 32,
+    },
+    format: {
+      type: String,
+      label: "Format",
+      optional: true,
+      allowedValues: [
+        "subheading",
+      ],
+      defaultValue: "subheading",
+    },
+  },
+]);
+
+// A schema representing a section of an article, with a subheading and some text.
+Schemas.ArticleSection = new SimpleSchema([
+  Schemas.Fallback,
+  {
+    subheading: {
+      type: Schemas.Subheading,
+      label: "Subheading",
+    },
+    text: {
+      type: Schemas.Subheading,
+      label: "Text",
+    },
+    format: {
+      type: String,
+      label: "Format",
+      optional: true,
+      allowedValues: [
+        "article-section",
+      ],
+      defaultValue: "article-section",
+    },
+  },
+]);
+
+// A schema representing an article, with a heading, text, and possibly article sections.
+Schemas.Article = new SimpleSchema([
+  Schemas.Fallback,
+  {
+    heading: {
+      type: Schemas.Heading,
+      label: "Heading",
+    },
+    text: {
+      type: Schemas.Subheading,
+      label: "Text",
+    },
+    sections: {
+      type: [Schemas.ArticleSection],
+      label: "Sections",
+    },
+    format: {
+      type: String,
+      label: "Format",
+      optional: true,
+      allowedValues: [
+        "article",
+      ],
+      defaultValue: "article",
+    },
+  },
+]);
+
 /**
  * Returns the schema associated with a specified format.
  *
@@ -147,8 +265,7 @@ Schemas.Result = new SimpleSchema([
  */
 
 MeteorMUD.schemaForFormat = function (format) {
-
-  return Schemas[MeteorMUD.Text.capitalizeString(format)] || Schemas.Fallback;
+  return Schemas[s.capitalizeString(format)] || Schemas.Fallback;
 };
 
 /**
