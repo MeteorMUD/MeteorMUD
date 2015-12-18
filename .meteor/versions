@@ -54,6 +54,7 @@ meteormud:commands@0.0.1
 meteormud:commands-scaffolding@0.0.1
 meteormud:help@0.0.1
 meteormud:namespace@0.0.1
+meteormud:output@0.0.1
 meteormud:parsers@0.0.1
 meteormud:parsers-cli@0.0.1
 meteormud:parsers-commands@0.0.1

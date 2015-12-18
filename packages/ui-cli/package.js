@@ -12,6 +12,7 @@ Package.onUse(function(api) {
   api.use('random');
   api.use('templating');
   api.use('meteormud:namespace');               
+  api.use('meteormud:output');
   api.use('meteormud:parsers-cli');
   api.imply('templating');
   api.addFiles('lib/ui-cli.js', ['client', 'server']);
