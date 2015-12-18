@@ -99,7 +99,6 @@ YellCommand.type = ScaffoldingCommand.type;
  */
 
 YellCommand.handler = function (arguments, completionHandler) {
-  console.log(arguments);
 
   // Fail catastrophically if we're passed an arguments object that isn't an array.
   if (!MeteorMUD.Underscore.isArray(arguments)) {
@@ -122,6 +121,63 @@ YellCommand.handler = function (arguments, completionHandler) {
   });
 };
 
+
+// The "tell" scaffolding command.
+TellCommand = {};
+
+// Sets the command name.
+TellCommand.name = "scaffolding-tell";
+
+// Sets the command summary.
+TellCommand.summary = ScaffoldingCommand.summary;
+
+// Sets the command text.
+TellCommand.text = ScaffoldingCommand.text;
+
+// Sets the command categories.
+TellCommand.categories = ScaffoldingCommand.categories;
+
+// Sets the command search terms.
+TellCommand.searchTerms = ScaffoldingCommand.searchTerms;
+
+// Sets the command permsissions.
+TellCommand.permissions = ScaffoldingCommand.permissions;
+
+// Sets the command type.
+TellCommand.type = ScaffoldingCommand.type;
+
+/**
+ * Handle the command.
+ *
+ * @param {[string]} arguments - The arguments supplied to the command.
+ * @param {function} completionHandler - A completion handler that takes an
+ * object.
+ */
+
+TellCommand.handler = function (arguments, completionHandler) {
+
+  // Fail catastrophically if we're passed an arguments object that isn't an array.
+  if (!MeteorMUD.Underscore.isArray(arguments)) {
+    throw new Error("Arguments is not an array.");
+  }
+
+  var message = "<b>" + Meteor.user().username + " tells you</b>: " + arguments.slice(1).join(" ");
+  var cleanedMessage = MeteorMUD.Schemas.Message.clean({
+    message: message,
+  });
+  var userId = Meteor.users.findOne({ username: arguments[0] })._id;
+  UserStatus.connections.find({ userId: userId }).fetch().forEach(function (connection) {
+    MeteorMUD.Output.sendOutput(connection._id, cleanedMessage);
+  });
+
+  // Otherwise, list the valid subcommands.
+  // Should shift this to some functionality of Commands.
+  return MeteorMUD.complete(completionHandler, {
+    success: true,
+    message: "Told " + arguments[0] + " '" + arguments.slice(1).join(" ") + "'.",
+  });
+};
+
 Meteor.startup(function () {
   // Startup code goes here.
 
@@ -139,5 +195,14 @@ Meteor.startup(function () {
 
   // Add the yell subcommand.
   MeteorMUD.Commands.addSubcommand("scaffolding", "yell");
+
+  // Clean the command.
+  Schemas.Command.clean(TellCommand);
+
+  // Add the yell command.
+  MeteorMUD.Commands.addCommand(TellCommand);
+
+  // Add the yell subcommand.
+  MeteorMUD.Commands.addSubcommand("scaffolding", "tell");
 });
 
