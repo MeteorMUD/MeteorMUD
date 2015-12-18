@@ -111,7 +111,7 @@ YellCommand.handler = function (arguments, completionHandler) {
     message: message,
   });
   UserStatus.connections.find({}).fetch().forEach(function (connection) {
-    MeteorMUD.UI.CLI.sendOutput(connection._id, cleanedMessage);
+    MeteorMUD.Output.sendOutput(connection._id, cleanedMessage);
   });
 
   // Otherwise, list the valid subcommands.

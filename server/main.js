@@ -1,17 +1,19 @@
 UserStatus.events.on("connectionLogin", function(fields) {
   // Log this for posterity.
 
+  var Output = MeteorMUD.Output;
+
   for (var i = 0; i < 2; i++) {    
-    MeteorMUD.UI.CLI.sendOutput(fields.connectionId, {
+    Output.sendOutput(fields.connectionId, {
       message: "This is a test message made by the scaffolding to test messages!",
       format: "message",
     });
-    MeteorMUD.UI.CLI.sendOutput(fields.connectionId, {
+    Output.sendOutput(fields.connectionId, {
       success: true,
       message: "This is a test success result made by the scaffolding to test positive results!",
       format: "result",
     });
-    MeteorMUD.UI.CLI.sendOutput(fields.connectionId, {
+    Output.sendOutput(fields.connectionId, {
       success: false,
       error: {
         message: "This is a test error result made by the scaffolding to test negative results!",
@@ -20,7 +22,7 @@ UserStatus.events.on("connectionLogin", function(fields) {
       },
       format: "result",
     });
-    MeteorMUD.UI.CLI.sendOutput(fields.connectionId, { 
+    Output.sendOutput(fields.connectionId, { 
       format: "array",
       array: [
         {
@@ -39,15 +41,15 @@ UserStatus.events.on("connectionLogin", function(fields) {
         }
       ],
     });
-    MeteorMUD.UI.CLI.sendOutput(fields.connectionId, {
+    Output.sendOutput(fields.connectionId, {
       heading: "Test Heading",
       format: "heading",
     });
-    MeteorMUD.UI.CLI.sendOutput(fields.connectionId, {
+    Output.sendOutput(fields.connectionId, {
       subheading: "Test Subheading",
       format: "subheading",
     });
-    MeteorMUD.UI.CLI.sendOutput(fields.connectionId, { 
+    Output.sendOutput(fields.connectionId, { 
       success: true,
       messages: [
         {
@@ -68,7 +70,7 @@ UserStatus.events.on("connectionLogin", function(fields) {
   }
 
   if (MeteorMUD.Permissions.checkPermission(Meteor.userId(), "some_permission_that_does_not_exist")) {
-    MeteorMUD.UI.CLI.sendOutput(fields.connectionId, {
+    Output.sendOutput(fields.connectionId, {
       message: "This is a message that <b>SHOULD NOT</b> be displayed, based on its permissions!",
       format: "message",
     });
@@ -76,7 +78,7 @@ UserStatus.events.on("connectionLogin", function(fields) {
 
   MeteorMUD.Permissions.addPermission(Meteor.userId(), "some_ugly_test_permission");
   if (MeteorMUD.Permissions.checkPermission(Meteor.userId(), "some_ugly_test_permission")) {
-    MeteorMUD.UI.CLI.sendOutput(fields.connectionId, {
+    Output.sendOutput(fields.connectionId, {
       message: "This is a message that <b>SHOULD</b> be displayed, based on its permissions!",
       format: "message",
     });

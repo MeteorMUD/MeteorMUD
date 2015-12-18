@@ -1,6 +1,6 @@
 // Write your package code here!
 
-Meteor.subscribe("ui-cli");
+Meteor.subscribe("ui-cli", "ui-cli");
 
 // The collection we're using to manage this stuff.
 CLI.collection = new Meteor.Collection("ui-cli");
