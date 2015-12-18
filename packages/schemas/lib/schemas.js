@@ -53,6 +53,7 @@ Schemas.Message = new SimpleSchema([
       optional: true,
       min: 0,
       max: 256,
+      defaultValue: "No message was provided.",
     },
     format: {
       type: String,

@@ -68,8 +68,6 @@ Help.topicForCommand = function (command) {
     format: "help",
   };
 
-  console.log(result);
-
   // Return the result.
   return result;
 };

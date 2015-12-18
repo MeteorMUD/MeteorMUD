@@ -107,6 +107,7 @@ Schemas.Command = new SimpleSchema([
     },
     subcommands: {
       type: [String],
+      optional: true,
       defaultValue: [],
     },
     handler: {

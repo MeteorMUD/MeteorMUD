@@ -17,8 +17,6 @@ Schemas.Help_SeeAlso = new SimpleSchema([
     uniqueName: {
       type: String,
       label: "Unique Name",
-      index: true,
-      //unique: true,
     },
     title: {
       type: String,
@@ -42,13 +40,10 @@ Schemas.Help = new SimpleSchema([
       label: "Name",
       min: 2,
       max: 32,
-      index: true,
     },
     uniqueName: {
       type: String,
       label: "Unique Name",
-      index: true,
-      unique: true,
     },
     title: {
       type: String,
@@ -61,7 +56,6 @@ Schemas.Help = new SimpleSchema([
       label: "Summary",
       min: 50,
       max: 250,
-      index: true,
     },
     categories: {
       type: [String],
@@ -71,21 +65,18 @@ Schemas.Help = new SimpleSchema([
         "General",
       ],
       min: 1,
-      index: true,
     },
     searchTerms: {
       type: [String],
       label: "Search Terms",
       optional: true,
       defaultValue: [],
-      index: true,
     },
     permissions: {
       type: [String],
       label: "Permissions",
       optional: true,
       defaultValue: [],
-      index: true,
     },
     text: {
       type: String,

@@ -60,7 +60,7 @@ ScaffoldingCommand.handler = function (arguments, completionHandler) {
   return MeteorMUD.complete(completionHandler, {
     success: false,
     error: {
-      message: "Could not execute 'scaffolding' command.",
+      message: "Could not execute '" + ScaffoldingCommand.name + "' command because you didn't specify a valid subcommand.",
       reason: "Valid subcommands for '" + ScaffoldingCommand.name + "' are " + MeteorMUD.UnderscoreString.toSentenceSerial(subcommands) + "."
     },
   });
@@ -99,28 +99,26 @@ YellCommand.type = ScaffoldingCommand.type;
  */
 
 YellCommand.handler = function (arguments, completionHandler) {
+  console.log(arguments);
 
   // Fail catastrophically if we're passed an arguments object that isn't an array.
   if (!MeteorMUD.Underscore.isArray(arguments)) {
     throw new Error("Arguments is not an array.");
   }
 
-  // Catch the case where we don't have any subcommands.
-  if (!subcommands || subcommands.length === 0) {
-    return MeteorMUD.complete(completionHandler, {
-      success: false,
-      error: {
-        message: "Could not execute '" + ChatChannelCommand.name + "' command.",
-        reason: "Chat-channel is not fully implemented; wait until there are subcommands!",
-      },
-    });
-  }
+  var message = "<b>" + Meteor.user().username + " yells</b>: " + arguments.join(" ");
+  var cleanedMessage = MeteorMUD.Schemas.Message.clean({
+    message: message,
+  });
+  UserStatus.connections.find({}).fetch().forEach(function (connection) {
+    MeteorMUD.UI.CLI.sendOutput(connection._id, cleanedMessage);
+  });
 
   // Otherwise, list the valid subcommands.
   // Should shift this to some functionality of Commands.
   return MeteorMUD.complete(completionHandler, {
     success: true,
-    message: "Yelled '" + arguments.join(" ") + "',",
+    message: "Yelled '" + arguments.join(" ") + "'.",
   });
 };
 
