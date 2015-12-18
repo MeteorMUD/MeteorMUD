@@ -1,7 +1,7 @@
 // Write your package code here!
 
 // The collection we're using to manage this stuff.
-var collection = new Mongo.Collection("help");
+var collection = new Meteor.Collection(null);
 
 // Attach the help-topic schema.
 collection.attachSchema(Schemas.Help);

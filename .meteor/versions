@@ -50,9 +50,14 @@ mdg:validation-error@0.1.0
 meteor@1.1.10
 meteor-base@1.0.1
 meteormud:accounts@0.0.1
+meteormud:commands@0.0.1
+meteormud:commands-scaffolding@0.0.1
 meteormud:help@0.0.1
 meteormud:namespace@0.0.1
 meteormud:parsers@0.0.1
+meteormud:parsers-cli@0.0.1
+meteormud:parsers-commands@0.0.1
+meteormud:parsers-expressions@0.0.1
 meteormud:permissions@0.0.1
 meteormud:schemas@0.0.1
 meteormud:templates@0.0.1

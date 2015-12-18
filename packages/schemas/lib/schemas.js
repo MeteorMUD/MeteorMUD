@@ -53,6 +53,7 @@ Schemas.Message = new SimpleSchema([
       optional: true,
       min: 0,
       max: 256,
+      defaultValue: "No message was provided.",
     },
     format: {
       type: String,
@@ -257,6 +258,34 @@ Schemas.Article = new SimpleSchema([
   },
 ]);
 
+// A schema representing a name/description pair.
+Schemas.NameAndDescription = new SimpleSchema([
+  Schemas.Fallback,
+  {
+    name: {
+      type: String,
+      label: "Name",
+      min: 1,
+      max: 64,
+    },
+    description: {
+      type: String,
+      label: "Description",
+      min: 64,
+      max: 256,
+    },
+    format: {
+      type: String,
+      label: "Format",
+      optional: true,
+      allowedValues: [
+        "name-and-description",
+      ],
+      defaultValue: "name-and-description",
+    },
+  },
+]);
+
 /**
  * Returns the schema associated with a specified format.
  *
@@ -278,8 +307,8 @@ MeteorMUD.schemaForFormat = function (format) {
 MeteorMUD.complete = function (completionHandler, object) {
 
   // Assert that this is a valid completion handler.
-  if (!Guard.isFunction(completionHandler)) {
-    Guard.fail("Invalid completion handler.");
+  if (!_.isFunction(completionHandler)) {
+    throw new Error("Invalid completion handler.");
   }
 
   // Clean the input object.  We'll see how well this performs.
