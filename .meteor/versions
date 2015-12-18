@@ -53,6 +53,9 @@ meteormud:accounts@0.0.1
 meteormud:help@0.0.1
 meteormud:namespace@0.0.1
 meteormud:parsers@0.0.1
+meteormud:parsers-cli@0.0.1
+meteormud:parsers-commands@0.0.1
+meteormud:parsers-expressions@0.0.1
 meteormud:permissions@0.0.1
 meteormud:schemas@0.0.1
 meteormud:templates@0.0.1

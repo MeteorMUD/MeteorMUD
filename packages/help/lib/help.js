@@ -6,15 +6,14 @@ MeteorMUD.Help = Help = {};
 // The global Schemas object.
 Schemas = MeteorMUD.Schemas;
 
-Schemas.HelpSeeAlso = new SimpleSchema([
+// The "See Also" schema.
+Schemas.Help_SeeAlso = new SimpleSchema([
   Schemas.Fallback,
+  Schemas.NameAndDescription.pick([
+    'name',
+    'description',
+  ]),
   {
-    name: {
-      type: String,
-      label: "Name",
-      min: 2,
-      max: 32,
-    },
     uniqueName: {
       type: String,
       label: "Unique Name",
@@ -26,12 +25,6 @@ Schemas.HelpSeeAlso = new SimpleSchema([
       label: "Title",
       min: 2,
       max: 64,
-    },
-    summary: {
-      type: String,
-      label: "Summary",
-      min: 50,
-      max: 250,
     },
     format: {
       type: String,
@@ -75,7 +68,7 @@ Schemas.Help = new SimpleSchema([
       label: "Categories",
       optional: true,
       defaultValue: [
-        "general",
+        "General",
       ],
       min: 1,
       index: true,
@@ -86,12 +79,6 @@ Schemas.Help = new SimpleSchema([
       optional: true,
       defaultValue: [],
       index: true,
-    },
-    seeAlso: {
-      type: [Schemas.HelpSeeAlso],
-      label: "See Also",
-      optional: true,
-      defaultValue: [],
     },
     permissions: {
       type: [String],
@@ -104,6 +91,20 @@ Schemas.Help = new SimpleSchema([
       type: String,
       label: "Text",
       min: 250,
+    },
+    objects: {
+      type: [Object],
+      label: "Objects",
+      min: 0,
+      optional: true,
+      defaultValue: [],
+    },
+    seeAlso: {
+      type: [Schemas.Help_SeeAlso],
+      label: "See Also",
+      min: 0,
+      optional: true,
+      defaultValue: [],
     },
     format: {
       type: String,
