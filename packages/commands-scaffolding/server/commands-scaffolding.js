@@ -178,6 +178,59 @@ TellCommand.handler = function (arguments, completionHandler) {
   });
 };
 
+// The "who" scaffolding command.
+WhoCommand = {};
+
+// Sets the command name.
+WhoCommand.name = "scaffolding-who";
+
+// Sets the command summary.
+WhoCommand.summary = ScaffoldingCommand.summary;
+
+// Sets the command text.
+WhoCommand.text = ScaffoldingCommand.text;
+
+// Sets the command categories.
+WhoCommand.categories = ScaffoldingCommand.categories;
+
+// Sets the command search terms.
+WhoCommand.searchTerms = ScaffoldingCommand.searchTerms;
+
+// Sets the command permsissions.
+WhoCommand.permissions = ScaffoldingCommand.permissions;
+
+// Sets the command type.
+WhoCommand.type = ScaffoldingCommand.type;
+
+/**
+ * Handle the command.
+ *
+ * @param {[string]} arguments - The arguments supplied to the command.
+ * @param {function} completionHandler - A completion handler that takes an
+ * object.
+ */
+
+WhoCommand.handler = function (arguments, completionHandler) {
+
+  // Fail catastrophically if we're passed an arguments object that isn't an array.
+  if (!MeteorMUD.Underscore.isArray(arguments)) {
+    throw new Error("Arguments is not an array.");
+  }
+
+  // Build the list of online users.
+  var onlineUsers = Meteor.users.find({ "status.online": true }).fetch().map(function (user) {
+    return user.username;
+  });
+
+  var message = "<b>Online</b>: " + MeteorMUD.UnderscoreString.toSentenceSerial(onlineUsers) + ".";
+
+  // Print the list.
+  return MeteorMUD.complete(completionHandler, {
+    success: true,
+    message: message,
+  });
+};
+
 Meteor.startup(function () {
   // Startup code goes here.
 
@@ -199,10 +252,21 @@ Meteor.startup(function () {
   // Clean the command.
   Schemas.Command.clean(TellCommand);
 
-  // Add the yell command.
+  // Add the tell command.
   MeteorMUD.Commands.addCommand(TellCommand);
 
-  // Add the yell subcommand.
+  // Add the tell subcommand.
   MeteorMUD.Commands.addSubcommand("scaffolding", "tell");
+
+  // Clean the command.
+  Schemas.Command.clean(WhoCommand);
+
+  // Add the who command.
+  MeteorMUD.Commands.addCommand(WhoCommand);
+
+  // Add the who subcommand.
+  MeteorMUD.Commands.addSubcommand("scaffolding", "who");
+
+
 });
 
