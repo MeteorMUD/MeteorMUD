@@ -102,12 +102,26 @@ Schemas.Command = new SimpleSchema([
     usage: {
       type: [Schemas.Command_Usage],
       label: "Usage",
-      min: 1,
+      min: 0,
       max: 12,
-    }
+    },
     subcommands: {
       type: [String],
       defaultValue: [],
+    },
+    handler: {
+      type: Object,
+      label: "Handler",
+      defaultValue: function (arguments, completionHandler) {
+        return MeteorMUD.complete(completionHandler, {
+          success: false,
+          error: {
+            message: "The command could not be executed.",
+            reason: "This command did not specify a handler function.",
+            suggestion: "Implement a handler function for the command.", 
+          },
+        });
+      }
     },
     format: {
       type: String,

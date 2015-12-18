@@ -12,13 +12,13 @@ var types = [];
  * @param {string} type - The command type.
  */
 
-Commands.addCommandType(type) {
+Commands.addCommandType = function (type) {
   if (types.indexOf(type) !== -1) {
     types.push(type);
     types.sort();
     types = MeteorMUD.Underscore.uniq(types, true);
   }
-}
+};
 
 // Minimum acceptable command name length.
 var minimumNameLength = 3;
@@ -30,7 +30,7 @@ var maximumNameLength = 20;
 function isValidCommandName(name) {
 
   // Guard against non-strings and empty/blank strings.
-  if (MeteorMUD.UnderscoreString.isEmpty(name) || MeteorMUD.UnderscoreString.isBlank(name)) {
+  if (MeteorMUD.UnderscoreString.isBlank(name)) {
     return false;
   }
 
@@ -68,6 +68,8 @@ Help.topicForCommand = function (command) {
     format: "help",
   };
 
+  console.log(result);
+
   // Return the result.
   return result;
 };
@@ -80,11 +82,13 @@ Help.topicForCommand = function (command) {
 
 Commands.insertHelpTopicForCommand = function (command) {
 
+  var topic = Help.topicForCommand(command);
+
   // Clean the topic.
   Schemas.Help.clean(topic);
 
   // Insert the topic.
-  Help.insertTopic(Help.topicForCommand(command));
+  Help.insertTopic(topic);
 
 };
 
@@ -141,7 +145,7 @@ Commands.addCommand = function (command) {
   setCommand(commandName, command);
 
   // And set the help topic.
-  Commands.insertHelpTopicForCommand(command));
+  Commands.insertHelpTopicForCommand(command);
 
 };
 

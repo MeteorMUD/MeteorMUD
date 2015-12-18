@@ -39,8 +39,8 @@ ExpressionParser.parseExpression = function (expression, completionHandler) {
 ExpressionParser.findCommandForExpressionComponents = function (components, completionHandler) {
 
   // Guard against non-array objects.
-  if (!Guard.isArray(components)) {
-    Guard.fail("Invalid components object: " + components);
+  if (!MeteorMUD.Underscore.isArray(components)) {
+    throw new Error("Invalid components object: " + components);
   }
 
   // Default failure message.
@@ -50,7 +50,7 @@ ExpressionParser.findCommandForExpressionComponents = function (components, comp
   var firstComponent = components[0];
 
   // Guard against empty commands.
-  if (!Guard.isNonBlankString(firstComponent)) {
+  if (MeteorMUD.UnderscoreString.isBlank(firstComponent)) {
     return MeteorMUD.complete(completionHandler, {
       success: false,
       error: {
@@ -61,7 +61,7 @@ ExpressionParser.findCommandForExpressionComponents = function (components, comp
   }
 
   // Get command.
-  var command = MeteorMUD.Commands.getCommandByName(firstComponent);
+  var command = MeteorMUD.Commands.getCommand(firstComponent);
 
   // Guard against nonexistent commands.
   if (!command) {

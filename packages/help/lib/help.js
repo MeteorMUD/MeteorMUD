@@ -18,7 +18,7 @@ Schemas.Help_SeeAlso = new SimpleSchema([
       type: String,
       label: "Unique Name",
       index: true,
-      unique: true,
+      //unique: true,
     },
     title: {
       type: String,

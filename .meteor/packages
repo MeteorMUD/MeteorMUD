@@ -43,3 +43,4 @@ meteormud:parsers-commands                # Parsers for general commands.
 meteormud:parsers-expressions             # Parsers for expressions (commands, orders, etc).
 meteormud:permissions                     # Access control for MeteorMUD.
 meteormud:help                            # Core help support for MeteorMUD.
+meteormud:commands-scaffolding            # Scaffolding commands for testing.
