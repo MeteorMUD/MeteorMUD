@@ -1,7 +1,7 @@
 UserStatus.events.on("connectionLogin", function(fields) {
   // Log this for posterity.
 
-  for (var i = 0; i < 2; i++) {
+  for (var i = 0; i < 2; i++) {    
     MeteorMUD.UI.CLI.sendOutput(fields.connectionId, {
       message: "This is a test message made by the scaffolding to test messages!",
       format: "message",
@@ -64,6 +64,21 @@ UserStatus.events.on("connectionLogin", function(fields) {
         }
       ],
       format: "result",
+    });
+  }
+
+  if (MeteorMUD.Permissions.checkPermission(Meteor.userId(), "some_permission_that_does_not_exist")) {
+    MeteorMUD.UI.CLI.sendOutput(fields.connectionId, {
+      message: "This is a message that <b>SHOULD NOT</b> be displayed, based on its permissions!",
+      format: "message",
+    });
+  }
+
+  MeteorMUD.Permissions.addPermission(Meteor.userId(), "some_ugly_test_permission");
+  if (MeteorMUD.Permissions.checkPermission(Meteor.userId(), "some_ugly_test_permission")) {
+    MeteorMUD.UI.CLI.sendOutput(fields.connectionId, {
+      message: "This is a message that <b>SHOULD</b> be displayed, based on its permissions!",
+      format: "message",
     });
   }
 

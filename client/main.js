@@ -29,7 +29,7 @@ Template.body.events({
     event.preventDefault();
 
     // Get value from form element
-    var text = s.cleanString(event.target.text.value);
+    var text = MeteorMUD.UnderscoreString.clean(event.target.text.value);
 
     if (!text || text.length == 0) {
       return;
