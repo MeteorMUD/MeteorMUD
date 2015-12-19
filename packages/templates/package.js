@@ -15,6 +15,7 @@ Package.onUse(function(api) {
   api.addFiles('client/error.html', 'client');
   api.addFiles('client/fallback.html', 'client');
   api.addFiles('client/heading.html', 'client');
+  api.addFiles('client/help.html', 'client');
   api.addFiles('client/message.html', 'client');
   api.addFiles('client/messages.html', 'client');
   api.addFiles('client/object.html', 'client');
@@ -25,6 +26,7 @@ Package.onUse(function(api) {
   api.addFiles('client/error.js', 'client');
   api.addFiles('client/fallback.js', 'client');
   api.addFiles('client/heading.js', 'client');
+  api.addFiles('client/help.js', 'client');
   api.addFiles('client/message.js', 'client');
   api.addFiles('client/messages.js', 'client');
   api.addFiles('client/object.js', 'client');

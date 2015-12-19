@@ -1,0 +1,17 @@
+<template name="meteormud_help">
+  <!-- meteormud_help -->
+  <h2>{{{title}}}</h2>
+  [Categories: {{{arrayToSentence categories}}}]
+  <p>{{{summary}}}</p>
+  <p>{{{text}}}</p>
+  {{#each objects}}
+    {{> meteormud_object }}
+  {{/each}}
+  {{#if seeAlso}}
+    <h3>See Also</h3>
+    {{#each seeAlso}}
+      <li>{{{title}}}: {{{description}}}</li>
+    {{/each}}
+  {{/if}}
+  <!-- /meteormud_help -->
+</template>

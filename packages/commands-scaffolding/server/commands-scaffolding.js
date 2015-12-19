@@ -24,7 +24,7 @@ ScaffoldingCommand.searchTerms = ["scaffolding", "temporary", "wizard", "admin"]
 ScaffoldingCommand.permissions = ["nathan"];
 
 // Sets the command type.
-ScaffoldingCommand.type = ["Developer"];
+ScaffoldingCommand.type = "Developer";
 
 /**
  * Handle the command.
@@ -66,46 +66,116 @@ ScaffoldingCommand.handler = function (arguments, completionHandler) {
   });
 };
 
+// The "echo" scaffolding command.
+EchoCommand = {};
+EchoCommand.name = "scaffolding-echo";
+EchoCommand.summary = ScaffoldingCommand.summary;
+EchoCommand.text = ScaffoldingCommand.text;
+EchoCommand.categories = ScaffoldingCommand.categories;
+EchoCommand.searchTerms = ScaffoldingCommand.searchTerms;
+EchoCommand.permissions = ScaffoldingCommand.permissions;
+EchoCommand.type = ScaffoldingCommand.type;
+EchoCommand.handler = function (arguments, completionHandler) {
+  return MeteorMUD.complete(completionHandler, {
+    success: true,
+    message: arguments.join(" "),
+  });
+};
+
+// The "help" scaffolding command.
+HelpCommand = {};
+HelpCommand.name = "scaffolding-help";
+HelpCommand.summary = ScaffoldingCommand.summary;
+HelpCommand.text = ScaffoldingCommand.text;
+HelpCommand.categories = ScaffoldingCommand.categories;
+HelpCommand.searchTerms = ScaffoldingCommand.searchTerms;
+HelpCommand.permissions = ScaffoldingCommand.permissions;
+HelpCommand.type = ScaffoldingCommand.type;
+HelpCommand.handler = function (arguments, completionHandler) {
+  var topics = MeteorMUD.Help.getTopics({name: arguments.join(" ")}).fetch();
+  if (!topics || topics.length === 0) {
+    return MeteorMUD.complete(completionHandler, {
+      success: false,
+      error: {
+        error: "No help topics found!",
+        reason: "You searched for something that doesn't exist.",
+        suggestion: "Try searching for something better.",
+      },
+    });
+  }
+  if (topics.length > 1) {
+    var topicNames = topics.map(function (topic) {
+      return topic.name;
+    });
+    return MeteorMUD.complete(completionHandler, {
+      success: true,
+      message: "Found multiple matching topics: " + MeteorMUD.UnderscoreString.toSentenceSerial(topicNames) + ".",
+    });
+  }
+  console.dir(topics[0]);
+  return MeteorMUD.complete(completionHandler, {
+    success: true,
+    objects: [
+      topics[0],
+    ],
+  });
+};
+
+
+// The "tell" scaffolding command.
+TellCommand = {};
+TellCommand.name = "scaffolding-tell";
+TellCommand.summary = ScaffoldingCommand.summary;
+TellCommand.text = ScaffoldingCommand.text;
+TellCommand.categories = ScaffoldingCommand.categories;
+TellCommand.searchTerms = ScaffoldingCommand.searchTerms;
+TellCommand.permissions = ScaffoldingCommand.permissions;
+TellCommand.type = ScaffoldingCommand.type;
+TellCommand.handler = function (arguments, completionHandler) {
+  var message = "<b>" + Meteor.user().username + " tells you</b>: " + arguments.slice(1).join(" ");
+  var cleanedMessage = MeteorMUD.Schemas.Message.clean({
+    message: message,
+  });
+  var userId = Meteor.users.findOne({ username: arguments[0] })._id;
+  UserStatus.connections.find({ userId: userId }).fetch().forEach(function (connection) {
+    MeteorMUD.Output.sendOutput(connection._id, cleanedMessage);
+  });
+  return MeteorMUD.complete(completionHandler, {
+    success: true,
+    message: "Told " + arguments[0] + " '" + arguments.slice(1).join(" ") + "'.",
+  });
+};
+
+// The "who" scaffolding command.
+WhoCommand = {};
+WhoCommand.name = "scaffolding-who";
+WhoCommand.summary = ScaffoldingCommand.summary;
+WhoCommand.text = ScaffoldingCommand.text;
+WhoCommand.categories = ScaffoldingCommand.categories;
+WhoCommand.searchTerms = ScaffoldingCommand.searchTerms;
+WhoCommand.permissions = ScaffoldingCommand.permissions;
+WhoCommand.type = ScaffoldingCommand.type;
+WhoCommand.handler = function (arguments, completionHandler) {
+  var onlineUsers = Meteor.users.find({ "status.online": true }).fetch().map(function (user) {
+    return user.username;
+  });
+  var message = "<b>Online</b>: " + MeteorMUD.UnderscoreString.toSentenceSerial(onlineUsers) + ".";
+  return MeteorMUD.complete(completionHandler, {
+    success: true,
+    message: message,
+  });
+};
+
 // The "yell" scaffolding command.
 YellCommand = {};
-
-// Sets the command name.
 YellCommand.name = "scaffolding-yell";
-
-// Sets the command summary.
 YellCommand.summary = ScaffoldingCommand.summary;
-
-// Sets the command text.
 YellCommand.text = ScaffoldingCommand.text;
-
-// Sets the command categories.
 YellCommand.categories = ScaffoldingCommand.categories;
-
-// Sets the command search terms.
 YellCommand.searchTerms = ScaffoldingCommand.searchTerms;
-
-// Sets the command permsissions.
 YellCommand.permissions = ScaffoldingCommand.permissions;
-
-// Sets the command type.
 YellCommand.type = ScaffoldingCommand.type;
-
-/**
- * Handle the command.
- *
- * @param {[string]} arguments - The arguments supplied to the command.
- * @param {function} completionHandler - A completion handler that takes an
- * object.
- */
-
 YellCommand.handler = function (arguments, completionHandler) {
-  console.log(arguments);
-
-  // Fail catastrophically if we're passed an arguments object that isn't an array.
-  if (!MeteorMUD.Underscore.isArray(arguments)) {
-    throw new Error("Arguments is not an array.");
-  }
-
   var message = "<b>" + Meteor.user().username + " yells</b>: " + arguments.join(" ");
   var cleanedMessage = MeteorMUD.Schemas.Message.clean({
     message: message,
@@ -113,9 +183,6 @@ YellCommand.handler = function (arguments, completionHandler) {
   UserStatus.connections.find({}).fetch().forEach(function (connection) {
     MeteorMUD.Output.sendOutput(connection._id, cleanedMessage);
   });
-
-  // Otherwise, list the valid subcommands.
-  // Should shift this to some functionality of Commands.
   return MeteorMUD.complete(completionHandler, {
     success: true,
     message: "Yelled '" + arguments.join(" ") + "'.",
@@ -131,13 +198,25 @@ Meteor.startup(function () {
   // Add the scaffolding command.
   MeteorMUD.Commands.addCommand(ScaffoldingCommand);
 
-  // Clean the command.
+  Schemas.Command.clean(EchoCommand);
+  MeteorMUD.Commands.addCommand(EchoCommand);
+  MeteorMUD.Commands.addSubcommand("scaffolding", "echo");
+
+  Schemas.Command.clean(HelpCommand);
+  MeteorMUD.Commands.addCommand(HelpCommand);
+  MeteorMUD.Commands.addSubcommand("scaffolding", "help");
+
+  Schemas.Command.clean(TellCommand);
+  MeteorMUD.Commands.addCommand(TellCommand);
+  MeteorMUD.Commands.addSubcommand("scaffolding", "tell");
+
+  Schemas.Command.clean(WhoCommand);
+  MeteorMUD.Commands.addCommand(WhoCommand);
+  MeteorMUD.Commands.addSubcommand("scaffolding", "who");
+
   Schemas.Command.clean(YellCommand);
-
-  // Add the yell command.
   MeteorMUD.Commands.addCommand(YellCommand);
-
-  // Add the yell subcommand.
   MeteorMUD.Commands.addSubcommand("scaffolding", "yell");
+
 });
 

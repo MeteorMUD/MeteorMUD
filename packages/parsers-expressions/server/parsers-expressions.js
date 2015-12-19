@@ -90,7 +90,7 @@ ExpressionParser.findCommandForExpressionComponents = function (components, comp
     var newCommand = [firstComponent, secondComponent].join("-");
     var remainingComponents = components.slice(2);
     var newComponents = [newCommand].concat(remainingComponents);
-    return CommandParsers.findCommandForExpressionComponents(newComponents, completionHandler);
+    return ExpressionParser.findCommandForExpressionComponents(newComponents, completionHandler);
   }
 
   // Otherwise, we can pass the input off to the command handler.
