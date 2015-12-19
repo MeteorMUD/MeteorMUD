@@ -123,6 +123,17 @@ Schemas.Result = new SimpleSchema([
       min: 0,
       max: 256,
     },
+    objects: {
+      type: [Object],
+      label: "Objects",
+      blackbox: true,
+      min: 0,
+      autoValue: function () {
+        if (this.operator === null && !this.isSet) {
+          return new Array();
+        }
+      },
+    },
     error: {
       type: Schemas.Error,
       label: "Error",
@@ -294,7 +305,7 @@ Schemas.NameAndDescription = new SimpleSchema([
  */
 
 MeteorMUD.schemaForFormat = function (format) {
-  return Schemas[s.capitalizeString(format)] || Schemas.Fallback;
+  return Schemas[MeteorMUD.UnderscoreString.capitalize(format)] || Schemas.Fallback;
 };
 
 /**
@@ -307,7 +318,7 @@ MeteorMUD.schemaForFormat = function (format) {
 MeteorMUD.complete = function (completionHandler, object) {
 
   // Assert that this is a valid completion handler.
-  if (!_.isFunction(completionHandler)) {
+  if (!MeteorMUD.Underscore.isFunction(completionHandler)) {
     throw new Error("Invalid completion handler.");
   }
 

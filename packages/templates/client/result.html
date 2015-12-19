@@ -1,23 +1,22 @@
 <template name="meteormud_result">
   <!-- meteormud_result -->
+  {{#if success}}
+    {{#if message}}
+      {{> meteormud_message }}
+    {{else}}
+      {{#if messages }}
+        {{> meteormud_messages }}
+      {{/if}}
+    {{/if}}
+  {{else}}
+    {{#with error }}
+      {{> meteormud_error }}
+    {{/with}}
+  {{/if}}
   {{#if objects}}
     {{#each objects}}
       {{> meteormud_object }}
     {{/each}}
-  {{else}}
-    {{#if success}}
-      {{#if message}}
-        {{> meteormud_message }}
-      {{else}}
-        {{#if messages }}
-          {{> meteormud_messages }}
-        {{/if}}
-      {{/if}}
-    {{else}}
-      {{#with error }}
-        {{> meteormud_error }}
-      {{/with}}
-    {{/if}}
   {{/if}}
   <!-- /meteormud_result -->
 </template>

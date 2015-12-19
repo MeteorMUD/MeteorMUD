@@ -58,7 +58,7 @@ Help.topicForCommand = function (command) {
   var result = {
     name: command.name,
     uniqueName: "meteormud_help_command_" + command.name,
-    title: MeteorMUD.UnderscoreString.capitalize(command.name) + " (" + command.type + " Command )",
+    title: MeteorMUD.UnderscoreString.capitalize(command.name) + " (" + command.type + " Command)",
     summary: command.summary,
     categories: command.categories,
     searchTerms: command.searchTerms,
@@ -198,5 +198,4 @@ Commands.addSubcommand = function (commandName, subcommandName) {
 
   // Otherwise, push the subcommand.
   subcommands.push(subcommandName); 
-
 };

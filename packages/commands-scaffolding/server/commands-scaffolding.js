@@ -24,7 +24,7 @@ ScaffoldingCommand.searchTerms = ["scaffolding", "temporary", "wizard", "admin"]
 ScaffoldingCommand.permissions = ["nathan"];
 
 // Sets the command type.
-ScaffoldingCommand.type = ["Developer"];
+ScaffoldingCommand.type = "Developer";
 
 /**
  * Handle the command.
@@ -81,6 +81,46 @@ EchoCommand.handler = function (arguments, completionHandler) {
     message: arguments.join(" "),
   });
 };
+
+// The "help" scaffolding command.
+HelpCommand = {};
+HelpCommand.name = "scaffolding-help";
+HelpCommand.summary = ScaffoldingCommand.summary;
+HelpCommand.text = ScaffoldingCommand.text;
+HelpCommand.categories = ScaffoldingCommand.categories;
+HelpCommand.searchTerms = ScaffoldingCommand.searchTerms;
+HelpCommand.permissions = ScaffoldingCommand.permissions;
+HelpCommand.type = ScaffoldingCommand.type;
+HelpCommand.handler = function (arguments, completionHandler) {
+  var topics = MeteorMUD.Help.getTopics({name: arguments.join(" ")}).fetch();
+  if (!topics || topics.length === 0) {
+    return MeteorMUD.complete(completionHandler, {
+      success: false,
+      error: {
+        error: "No help topics found!",
+        reason: "You searched for something that doesn't exist.",
+        suggestion: "Try searching for something better.",
+      },
+    });
+  }
+  if (topics.length > 1) {
+    var topicNames = topics.map(function (topic) {
+      return topic.name;
+    });
+    return MeteorMUD.complete(completionHandler, {
+      success: true,
+      message: "Found multiple matching topics: " + MeteorMUD.UnderscoreString.toSentenceSerial(topicNames) + ".",
+    });
+  }
+  console.dir(topics[0]);
+  return MeteorMUD.complete(completionHandler, {
+    success: true,
+    objects: [
+      topics[0],
+    ],
+  });
+};
+
 
 // The "tell" scaffolding command.
 TellCommand = {};
@@ -161,6 +201,10 @@ Meteor.startup(function () {
   Schemas.Command.clean(EchoCommand);
   MeteorMUD.Commands.addCommand(EchoCommand);
   MeteorMUD.Commands.addSubcommand("scaffolding", "echo");
+
+  Schemas.Command.clean(HelpCommand);
+  MeteorMUD.Commands.addCommand(HelpCommand);
+  MeteorMUD.Commands.addSubcommand("scaffolding", "help");
 
   Schemas.Command.clean(TellCommand);
   MeteorMUD.Commands.addCommand(TellCommand);

@@ -108,7 +108,11 @@ Schemas.Command = new SimpleSchema([
     subcommands: {
       type: [String],
       optional: true,
-      defaultValue: [],
+      autoValue: function () {
+        if (this.operator === null && !this.isSet) {
+          return new Array();
+        }
+      },
     },
     handler: {
       type: Object,

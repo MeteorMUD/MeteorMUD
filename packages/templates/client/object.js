@@ -1,6 +1,6 @@
 Template.meteormud_object.helpers({
   logObject: function () {
-    console.log("meteormud_result");
+    console.log("meteormud_object");
     console.dir(this);
   },
   getTemplateName: function () {

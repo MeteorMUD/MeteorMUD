@@ -67,10 +67,7 @@ Templates.getTemplateForObject = function (object) {
 
   // Catch case where we're dealing with an array.
   if (_.isArray(object)) {
-    console.log("array");
     return Templates.getTemplateForFormat("array");
-  } else {
-    console.log(object);
   }
 
   // Return the template for the format or the fallback.
@@ -92,6 +89,7 @@ Meteor.startup(function () {
   Templates.setTemplateForFormat("meteormud_error", "error");
   Templates.setTemplateForFormat("meteormud_fallback", "fallback");
   Templates.setTemplateForFormat("meteormud_heading", "heading");
+  Templates.setTemplateForFormat("meteormud_help", "help");
   Templates.setTemplateForFormat("meteormud_message", "message");
   Templates.setTemplateForFormat("meteormud_messages", "messages");
   Templates.setTemplateForFormat("meteormud_object", "object");

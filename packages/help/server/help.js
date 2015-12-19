@@ -71,7 +71,7 @@ Help.addSeeAlsoForTopicWithUniqueName = function (uniqueName, seeAlso) {
   // Insert the topic.
   collection.insert(topic, function (error, id) {
     if (error) {
-      Guard.fail("Failed to insert help topic '" + topic.title + "': " + error.toString());
+      throw new Error("Failed to insert help topic '" + topic.title + "': " + error.toString());
     }
   });
 };
@@ -132,7 +132,7 @@ Help.remove = function (selector) {
   // Remove the items.
   collection.remove(selector, function (error, id) {
     if (error) {
-      Guard.fail("Failed to remove help topics: " + error.toString());
+      throw new Error("Failed to remove help topics: " + error.toString());
     }
   });
 };
