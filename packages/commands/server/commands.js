@@ -21,7 +21,7 @@ Commands.addCommandType = function (type) {
 };
 
 // Minimum acceptable command name length.
-var minimumNameLength = 3;
+var minimumNameLength = 2;
 
 // Maximum acceptable command name length.
 var maximumNameLength = 20;
@@ -158,7 +158,10 @@ Commands.addCommand = function (command) {
 Commands.getCommand = function (commandName, sessionId) {
   var result = getCommand(commandName);
   if (result && result.permissions && result.permissions.length) {
-    if (!Roles.userIsInRole(MeteorMUD.Accounts.userIdForSessionId(sessionId), command.permissions, sessionId)) {
+    var userId = MeteorMUD.Accounts.userIdForSessionId(sessionId);
+    if (!Roles.userIsInRole(userId, result.permissions, sessionId)) {
+    // var userPermissions = Meteor.users.findOne(userId).roles.__global_roles__;
+    // console.log("Rejecting command '" + commandName + "' because of insufficient permissions (" + userPermissions + ") vs (" + result.permissions + ").");
       result = undefined;
     }
   }
