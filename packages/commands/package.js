@@ -12,6 +12,7 @@ Package.onUse(function(api) {
   api.use('meteormud:namespace');               
   api.use('meteormud:schemas');
   api.use('meteormud:help');
+  api.use('meteormud:accounts');
   api.addFiles('lib/commands.js', ['client', 'server']);
   api.addFiles('client/commands.js', 'client');
   api.addFiles('server/commands.js', 'server');

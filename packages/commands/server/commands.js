@@ -151,11 +151,18 @@ Commands.addCommand = function (command) {
  * Gets a command by name.
  *
  * @param {string} commandName - A string containing a command name or command names.
+ * @param {string} sessionId - The session ID of the submitting session.
  * @return {object} - The command, if found.
  */
 
-Commands.getCommand = function (commandName) {
-  return getCommand(commandName);
+Commands.getCommand = function (commandName, sessionId) {
+  var result = getCommand(commandName);
+  if (result && result.permissions && result.permissions.length) {
+    if (!Roles.userIsInRole(MeteorMUD.Accounts.userIdForSessionId(sessionId), command.permissions, sessionId)) {
+      result = undefined;
+    }
+  }
+  return result;
 }
 
 /**

@@ -24,6 +24,7 @@ accounts-ui                               # UI-related functionality for account
 
 # Third-Party Packages
 
+alanning:roles                            # Role-based access control.
 aldeed:simple-schema                      # Support for simple object schema validation.
 artwells:accounts-guest			              # Support for automatically creating accounts for guests.
 mizzao:user-status                        # Support for monitoring user status.
@@ -42,6 +43,6 @@ meteormud:parsers                         # Core parsing support for MeteorMUD.
 meteormud:parsers-cli                     # Command-Line Interface parser.
 meteormud:parsers-commands                # Parsers for general commands.
 meteormud:parsers-expressions             # Parsers for expressions (commands, orders, etc).
-meteormud:permissions                     # Access control for MeteorMUD.
 meteormud:help                            # Core help support for MeteorMUD.
+meteormud:commands                        # Core command support for MeteorMUD.
 meteormud:commands-scaffolding            # Scaffolding commands for testing.

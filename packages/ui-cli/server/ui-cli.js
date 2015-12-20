@@ -12,7 +12,7 @@ Meteor.publish("ui-cli", MeteorMUD.Output.publisher);
  */
 
 CLI.sendInputString = function (sessionId, inputString) {
-  MeteorMUD.Parsers.CLI.parseInputString(inputString, function (completionObject) {
+  MeteorMUD.Parsers.CLI.parseInputString(inputString, sessionId, function (completionObject) {
     MeteorMUD.Output.sendOutput(sessionId, completionObject);
   });
 };
