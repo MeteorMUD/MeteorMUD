@@ -2,8 +2,9 @@ accounts-base@1.2.2
 accounts-password@1.1.4
 accounts-ui@1.1.6
 accounts-ui-unstyled@1.1.8
+alanning:roles@1.2.14
 aldeed:collection2@2.7.0
-aldeed:simple-schema@1.5.0
+aldeed:simple-schema@1.5.1
 artwells:accounts-guest@0.1.13
 autoupdate@1.2.4
 babel-compiler@5.8.24_1
@@ -59,7 +60,6 @@ meteormud:parsers@0.0.1
 meteormud:parsers-cli@0.0.1
 meteormud:parsers-commands@0.0.1
 meteormud:parsers-expressions@0.0.1
-meteormud:permissions@0.0.1
 meteormud:schemas@0.0.1
 meteormud:templates@0.0.1
 meteormud:ui-cli@0.0.1

@@ -69,15 +69,15 @@ UserStatus.events.on("connectionLogin", function(fields) {
     });
   }
 
-  if (MeteorMUD.Permissions.checkPermission(Meteor.userId(), "some_permission_that_does_not_exist")) {
+  if (Roles.userIsInRole(Meteor.userId(), "some_permission_that_does_not_exist", fields.connectionId)) {
     Output.sendOutput(fields.connectionId, {
       message: "This is a message that <b>SHOULD NOT</b> be displayed, based on its permissions!",
       format: "message",
     });
   }
 
-  MeteorMUD.Permissions.addPermission(Meteor.userId(), "some_ugly_test_permission");
-  if (MeteorMUD.Permissions.checkPermission(Meteor.userId(), "some_ugly_test_permission")) {
+  Roles.addUsersToRoles(Meteor.userId(), "some_ugly_test_permission", fields.connectionId);
+  if (Roles.userIsInRole(Meteor.userId(), "some_ugly_test_permission", fields.connectionId)) {
     Output.sendOutput(fields.connectionId, {
       message: "This is a message that <b>SHOULD</b> be displayed, based on its permissions!",
       format: "message",

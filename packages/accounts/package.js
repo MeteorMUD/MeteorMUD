@@ -13,11 +13,13 @@ Package.onUse(function(api) {
   api.use('accounts-password');
   api.use('check');
   api.use('tracker');
+  api.use('alanning:roles');
   api.use('artwells:accounts-guest');
   api.use('mizzao:user-status');
   api.use('meteormud:namespace');
   api.imply('accounts-base');  
-  api.imply('mizzao:user-status');            
+  api.imply('mizzao:user-status');
+  api.imply('alanning:roles');
   api.addFiles('lib/accounts.js', ['client', 'server']);
   api.addFiles('client/accounts.js', 'client');
   api.addFiles('server/accounts.js', 'server');

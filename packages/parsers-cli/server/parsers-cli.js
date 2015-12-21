@@ -4,11 +4,12 @@
  * Processes an input string.
  *
  * @param {string} inputString - A string containing a command.
+ * @param {string} sessionId - The session ID of the submitting session.
  * @param {function} completionHandler - A completion handler that takes an
  * object.
  */
 
-CLIParser.parseInputString = function (inputString, completionHandler) {
+CLIParser.parseInputString = function (inputString, sessionId, completionHandler) {
 
   // Default failure message.
   var message = "Could not execute input '" + inputString + "'.";
@@ -40,7 +41,7 @@ CLIParser.parseInputString = function (inputString, completionHandler) {
 
   // Then send them off to the command parser.
   expressions.forEach(function (expression) {
-    MeteorMUD.Parsers.Expressions.parseExpression(expression, completionHandler);
+    MeteorMUD.Parsers.Expressions.parseExpression(expression, sessionId, completionHandler);
   });
 
 };

@@ -21,7 +21,10 @@ ScaffoldingCommand.categories = ["Commands", "OOC Commands"];
 ScaffoldingCommand.searchTerms = ["scaffolding", "temporary", "wizard", "admin"];
 
 // Sets the command permsissions.
-ScaffoldingCommand.permissions = ["nathan"];
+ScaffoldingCommand.permissions = [
+  MeteorMUD.Roles.ADMIN,          // Allow ADMIN.
+  MeteorMUD.Roles.DEVELOPER,      // Allow DEVELOPER.
+];
 
 // Sets the command type.
 ScaffoldingCommand.type = "Developer";
@@ -30,11 +33,12 @@ ScaffoldingCommand.type = "Developer";
  * Handle the command.
  *
  * @param {[string]} arguments - The arguments supplied to the command.
+ * @param {string} sessionId - The session Id.
  * @param {function} completionHandler - A completion handler that takes an
  * object.
  */
 
-ScaffoldingCommand.handler = function (arguments, completionHandler) {
+ScaffoldingCommand.handler = function (arguments, sessionId, completionHandler) {
 
   // Fail catastrophically if we're passed an arguments object that isn't an array.
   if (!MeteorMUD.Underscore.isArray(arguments)) {
@@ -75,7 +79,7 @@ EchoCommand.categories = ScaffoldingCommand.categories;
 EchoCommand.searchTerms = ScaffoldingCommand.searchTerms;
 EchoCommand.permissions = ScaffoldingCommand.permissions;
 EchoCommand.type = ScaffoldingCommand.type;
-EchoCommand.handler = function (arguments, completionHandler) {
+EchoCommand.handler = function (arguments, sessionId, completionHandler) {
   return MeteorMUD.complete(completionHandler, {
     success: true,
     message: arguments.join(" "),
@@ -91,7 +95,7 @@ HelpCommand.categories = ScaffoldingCommand.categories;
 HelpCommand.searchTerms = ScaffoldingCommand.searchTerms;
 HelpCommand.permissions = ScaffoldingCommand.permissions;
 HelpCommand.type = ScaffoldingCommand.type;
-HelpCommand.handler = function (arguments, completionHandler) {
+HelpCommand.handler = function (arguments, sessionId, completionHandler) {
   var topics = MeteorMUD.Help.getTopics({name: arguments.join(" ")}).fetch();
   if (!topics || topics.length === 0) {
     return MeteorMUD.complete(completionHandler, {
@@ -112,7 +116,6 @@ HelpCommand.handler = function (arguments, completionHandler) {
       message: "Found multiple matching topics: " + MeteorMUD.UnderscoreString.toSentenceSerial(topicNames) + ".",
     });
   }
-  console.dir(topics[0]);
   return MeteorMUD.complete(completionHandler, {
     success: true,
     objects: [
@@ -121,6 +124,22 @@ HelpCommand.handler = function (arguments, completionHandler) {
   });
 };
 
+// The "su" scaffolding command.
+SuCommand = {};
+SuCommand.name = "scaffolding-su";
+SuCommand.summary = ScaffoldingCommand.summary;
+SuCommand.text = ScaffoldingCommand.text;
+SuCommand.categories = ScaffoldingCommand.categories;
+SuCommand.searchTerms = ScaffoldingCommand.searchTerms;
+SuCommand.permissions = [MeteorMUD.Roles.GUEST];
+SuCommand.type = ScaffoldingCommand.type;
+SuCommand.handler = function (arguments, sessionId, completionHandler) {
+  Roles.addUsersToRoles(MeteorMUD.Accounts.userIdForSessionId(sessionId), Roles.ADMIN, Roles.GLOBAL_GROUP);
+  return MeteorMUD.complete(completionHandler, {
+    success: true,
+    message: "Superuser status granted.",
+  });
+};
 
 // The "tell" scaffolding command.
 TellCommand = {};
@@ -131,7 +150,7 @@ TellCommand.categories = ScaffoldingCommand.categories;
 TellCommand.searchTerms = ScaffoldingCommand.searchTerms;
 TellCommand.permissions = ScaffoldingCommand.permissions;
 TellCommand.type = ScaffoldingCommand.type;
-TellCommand.handler = function (arguments, completionHandler) {
+TellCommand.handler = function (arguments, sessionId, completionHandler) {
   var message = "<b>" + Meteor.user().username + " tells you</b>: " + arguments.slice(1).join(" ");
   var cleanedMessage = MeteorMUD.Schemas.Message.clean({
     message: message,
@@ -155,7 +174,7 @@ WhoCommand.categories = ScaffoldingCommand.categories;
 WhoCommand.searchTerms = ScaffoldingCommand.searchTerms;
 WhoCommand.permissions = ScaffoldingCommand.permissions;
 WhoCommand.type = ScaffoldingCommand.type;
-WhoCommand.handler = function (arguments, completionHandler) {
+WhoCommand.handler = function (arguments, sessionId, completionHandler) {
   var onlineUsers = Meteor.users.find({ "status.online": true }).fetch().map(function (user) {
     return user.username;
   });
@@ -175,7 +194,7 @@ YellCommand.categories = ScaffoldingCommand.categories;
 YellCommand.searchTerms = ScaffoldingCommand.searchTerms;
 YellCommand.permissions = ScaffoldingCommand.permissions;
 YellCommand.type = ScaffoldingCommand.type;
-YellCommand.handler = function (arguments, completionHandler) {
+YellCommand.handler = function (arguments, sessionId, completionHandler) {
   var message = "<b>" + Meteor.user().username + " yells</b>: " + arguments.join(" ");
   var cleanedMessage = MeteorMUD.Schemas.Message.clean({
     message: message,
@@ -205,6 +224,10 @@ Meteor.startup(function () {
   Schemas.Command.clean(HelpCommand);
   MeteorMUD.Commands.addCommand(HelpCommand);
   MeteorMUD.Commands.addSubcommand("scaffolding", "help");
+
+  Schemas.Command.clean(SuCommand);
+  MeteorMUD.Commands.addCommand(SuCommand);
+  MeteorMUD.Commands.addSubcommand("scaffolding", "su");
 
   Schemas.Command.clean(TellCommand);
   MeteorMUD.Commands.addCommand(TellCommand);
