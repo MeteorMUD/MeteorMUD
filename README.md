@@ -1,8 +1,20 @@
 # MeteorMUD
 A little MUD, coded in Meteor!  How cool!
 
-## About
-This is just a project for me to learn about Meteor using something that's near and dear to my heart and extremely fun to hack on.
+This is sort of a partner project to [SwiftMUD](https://github.com/SwiftMUD/SwiftMUD/) -- a MUD written in the [Swift Programming Language](http:/swift.org/), but the two are not compatible, won't share any code, and essentially aren't even remotely similar except in that they were started by the same person.
+
+## So why two different MUD projects?
+
+Obviously, the core concept of a MUD is interesting to me, and both share this idea.  But MeteorMUD and SwiftMUD are technologically very different.  
+
+### MeteorMUD
+MeteorMUD is an attempt at a very modern, universal MUD -- it discards the telnet protocol in favor of WebSockets and is more aimed at providing an in-browser MUD experience, complete with dynamic HTML, CSS styling, and so forth, than a classic MUD experience.  Raw performance may take a back seat to a customized experience emphasizing the things at which HTML/ CSS/ Javascript/ browsers/ etc are good.  This project is, on a personal level, largely about creating a compelling and non-trivial full-stack application.
+
+### SwiftMUD
+SwiftMUD, on the other hand, is an attempt to create a very powerful, feature-rich MUD optimized for performance and simulation purposes.  I'm interested in [Agent-Based Computational Economics](https://en.wikipedia.org/wiki/Agent-based_computational_economics), genetic/evolutionary algorithms, artificial intelligence, natural language parsing, and some other topics that are not just highly technical but could be demanding in terms of performance.  I'm really interested in simulating a fantasy world here, not just creating a playable game.
+
+### But Node.js is fast!
+It's entirely possible that some, much, or all of the "really demanding" stuff will be ported to MeteorMUD, whether as Node.js packages, Meteor packages, or whatever, but since I'm fairly new to the Node/Meteor way of doing things, I'm being conservative.  I'm more experienced with developing and testing stuff written in Objective-C and consequently have some baseline expectations for Swift.  I'm much less experienced with Meteor and Node, Javascript in general, MongoDB, the various other things I need to figure out along the way, etc.
 
 ## Design
 This is essentially an entire project made of nothing but packages.  Very, very, very narrowly factored.  I think this makes it easier to add new things, to keep concerns separate, and to run tests.
